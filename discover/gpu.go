@@ -246,15 +246,15 @@ func GetGPUInfo() GpuInfoList {
 			},
 		}
 
-		// Fallback to CPU mode if we're lacking required vector extensions on x86
-		if cpuCapability < GPURunnerCPUCapability && runtime.GOARCH == "amd64" {
-			err := fmt.Errorf("CPU does not have minimum vector extensions, GPU inference disabled.  Required:%s  Detected:%s", GPURunnerCPUCapability, cpuCapability)
-			slog.Warn(err.Error())
-			bootstrapErrors = append(bootstrapErrors, err)
-			bootstrapped = true
-			// No need to do any GPU discovery, since we can't run on them
-			return GpuInfoList{cpus[0].GpuInfo}
-		}
+		// // Fallback to CPU mode if we're lacking required vector extensions on x86
+		// if cpuCapability < GPURunnerCPUCapability && runtime.GOARCH == "amd64" {
+		// 	err := fmt.Errorf("CPU does not have minimum vector extensions, GPU inference disabled.  Required:%s  Detected:%s", GPURunnerCPUCapability, cpuCapability)
+		// 	slog.Warn(err.Error())
+		// 	bootstrapErrors = append(bootstrapErrors, err)
+		// 	bootstrapped = true
+		// 	// No need to do any GPU discovery, since we can't run on them
+		// 	return GpuInfoList{cpus[0].GpuInfo}
+		// }
 
 		// Load ALL libraries
 		cHandles = initCudaHandles()
